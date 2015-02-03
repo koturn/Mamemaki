@@ -17,7 +17,13 @@ Mamemaki
 ## Usage
 
 ```sh
-$ ./omikuji
+$ ./mamemaki.out
+```
+
+or
+
+```sh
+> mamemaki.exe
 ```
 
 
