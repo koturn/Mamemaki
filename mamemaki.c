@@ -4,6 +4,7 @@
  * @author koturn
  * @date 2015-02-03
  */
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -30,7 +31,12 @@ xor128(void);
 
 
 #define SQUARE(x)  ((x) * (x))
-#define N_TRIAL  100000000
+#define N_TRIAL    100000000
+#define TOLERANCE  0.00025
+#ifndef M_PI
+#  define M_PI  acos(-1)
+#endif
+
 
 static uint32_t seed128[4];
 
@@ -46,7 +52,7 @@ main(void)
 {
   size_t i;
   unsigned int n_hit = 0;
-  double x, y;
+  double x, y, pi;
 
   xor128_seed((uint32_t) time(NULL));
   for (i = 0; i < N_TRIAL; i++) {
@@ -56,8 +62,13 @@ main(void)
       n_hit++;
     }
   }
-  printf("PI = %f\n", n_hit * 4.0 / N_TRIAL);
-  printf("鬼を追い払うことができました\n");
+  pi = n_hit * 4.0 / N_TRIAL;
+  printf("Calculated PI = %f\n", pi);
+  if (fabs(pi - M_PI) < TOLERANCE) {
+    printf("鬼を追い払うことができました\n");
+  } else {
+    printf("鬼を追い払うことができませんでした...\n");
+  }
   return EXIT_SUCCESS;
 }
 
